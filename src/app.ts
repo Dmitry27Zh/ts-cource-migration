@@ -133,7 +133,7 @@ interface User {
     }
   }
 
-  async function createTodo(todo: Todo) {
+  async function createTodo(todo: Omit<Todo, 'id'>) {
     try {
       const response = await fetch('https://jsonplaceholder.typicode.com/todos', {
         method: 'POST',
