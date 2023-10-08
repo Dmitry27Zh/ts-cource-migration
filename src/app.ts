@@ -90,16 +90,18 @@ interface User {
       users.forEach((user) => createUserOption(user))
     })
   }
-  function handleSubmit(event) {
+  function handleSubmit(event: Event) {
     event.preventDefault()
 
-    createTodo({
-      userId: Number(form.user.value),
-      title: form.todo.value,
-      completed: false,
-    })
+    if (form) {
+      createTodo({
+        userId: Number(form.user.value),
+        title: form.todo.value,
+        completed: false,
+      })
+    }
   }
-  function handleTodoChange() {
+  function handleTodoChange(this: HTMLInputElement) {
     const todoId = this.parentElement.dataset.id
     const completed = this.checked
 
