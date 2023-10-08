@@ -102,14 +102,22 @@ interface User {
     }
   }
   function handleTodoChange(this: HTMLInputElement) {
-    const todoId = this.parentElement.dataset.id
-    const completed = this.checked
+    const parent = this.parentElement
 
-    toggleTodoComplete(todoId, completed)
+    if (parent) {
+      const todoId = parent.dataset.id
+      const completed = this.checked
+
+      todoId && toggleTodoComplete(todoId, completed)
+    }
   }
-  function handleClose() {
-    const todoId = this.parentElement.dataset.id
-    deleteTodo(todoId)
+  function handleClose(this: HTMLSpanElement) {
+    const parent = this.parentElement
+
+    if (parent) {
+      const todoId = parent.dataset.id
+      todoId && deleteTodo(todoId)
+    }
   }
 
   // Async logic
@@ -120,7 +128,9 @@ interface User {
 
       return data
     } catch (error) {
-      alertError(error)
+      if (error instanceof Error) {
+        alertError(error)
+      }
     }
   }
 
@@ -131,7 +141,9 @@ interface User {
 
       return data
     } catch (error) {
-      alertError(error)
+      if (error instanceof Error) {
+        alertError(error)
+      }
     }
   }
 
@@ -149,11 +161,13 @@ interface User {
 
       printTodo(newTodo)
     } catch (error) {
-      alertError(error)
+      if (error instanceof Error) {
+        alertError(error)
+      }
     }
   }
 
-  async function toggleTodoComplete(todoId: ID, completed) {
+  async function toggleTodoComplete(todoId: ID, completed: boolean) {
     try {
       const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${todoId}`, {
         method: 'PATCH',
@@ -167,7 +181,9 @@ interface User {
         throw new Error('Failed to connect with the server! Please try later.')
       }
     } catch (error) {
-      alertError(error)
+      if (error instanceof Error) {
+        alertError(error)
+      }
     }
   }
 
@@ -186,7 +202,9 @@ interface User {
         throw new Error('Failed to connect with the server! Please try later.')
       }
     } catch (error) {
-      alertError(error)
+      if (error instanceof Error) {
+        alertError(error)
+      }
     }
   }
 })()
