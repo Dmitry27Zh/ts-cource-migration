@@ -121,7 +121,7 @@ interface User {
   }
 
   // Async logic
-  async function getAllTodos() {
+  async function getAllTodos(): Promise<Todo[]> {
     try {
       const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=15')
       const data = await response.json()
@@ -131,10 +131,12 @@ interface User {
       if (error instanceof Error) {
         alertError(error)
       }
+
+      return []
     }
   }
 
-  async function getAllUsers() {
+  async function getAllUsers(): Promise<User[]> {
     try {
       const response = await fetch('https://jsonplaceholder.typicode.com/users?_limit=5')
       const data = await response.json()
@@ -144,6 +146,8 @@ interface User {
       if (error instanceof Error) {
         alertError(error)
       }
+
+      return []
     }
   }
 
